@@ -1,0 +1,58 @@
+  use DotTK
+
+  see the documentation for the API here http://www.dot.tk/en/pageH12.html
+
+  calling conventions:
+
+  1. you need to create DotTK object
+  my $client = DotTK->new();
+
+  2. to call a function like
+  https://api.domainshare.tk/function_name
+  with input parameters arg1=val1, arg2=val2, arg3=val3 etc
+  you need to
+  call
+  $client->function_name(arg1=>val1, arg2=val2, arg3=val3)
+
+  3. if you have multiple parameters with same name.
+  for example nameserver = 'ns1.a.com' and nameserver = 'ns2.a.com'
+  call it like
+  $client->function_name(arg1=>val1, arg2=val2, nameserver=>['ns1.a.com', 'ns2.a.com'])
+
+  4, call to the function will return an array where 1st element is status code (1 - success, 0 - error), 2nd is a hashref with eigher error discription
+  data eigher function's return result.
+  here is an examples for success
+
+  $VAR1 = [
+	    1,
+	    {
+	      'status' => 'DOMAIN AVAILABLE',
+	      'type' => 'result',
+	      'domainname' => 'TEST123.TK',
+	      'domaintype' => 'FREE'
+	    }
+	  ];
+
+
+  here is an example for error
+
+  $VAR1 = [
+	    0,
+	    {
+	      'reason' => 'Invalid domain name',
+	      'type' => 'Server Error'
+	    }
+	  ];
+
+  "type" can be 'Server Error' or 'Input Error'
+
+  Input Error relates to missed mandatory fields
+  Server Error means the error was returned by API server
+
+  error message is in the "reason" field in both cases.
+
+  5. if API function is intended to return nested xml structure it can be accessed by walking a hash
+
+  for example
+  $result->{nameservers}->{hostname}
+

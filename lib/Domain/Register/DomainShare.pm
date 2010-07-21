@@ -1,6 +1,6 @@
 package Domain::Register::DomainShare;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 =head1 NAME
 Domain::Register::DomainShare - an interface to Dot TK's DomainShare API
